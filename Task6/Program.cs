@@ -1,34 +1,50 @@
-﻿
-using System;
+﻿using System;
 
 class Program
 {
-    // Matindegi sozder sanyn esepteu
-    static int CountWords(string text)
-    {
-        string[] words = text.Split(
-            new char[] { ' ', '\t', '\n', '\r' },
-            StringSplitOptions.RemoveEmptyEntries
-        );
-
-        return words.Length;
-    }
-
     static void Main()
     {
-        int nomer = 6;
+        string text;
+        // Бос жол енгізілсе, do-while арқылы қайта сұрау
+        do
+        {
+            Console.WriteLine("Жолды енгізіңіз:");
+            text = Console.ReadLine();
+            
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                Console.WriteLine("Қате: Жол бос болмауы керек! Қайтадан енгізіңіз.");
+            }
+        } while (string.IsNullOrWhiteSpace(text));
 
-        Console.WriteLine("6-tapsyrma, 1-nusqa");
-        Console.WriteLine("Kod nomeri: " + nomer);
+        Console.WriteLine($"Бастапқы жол: \"{text}\"");
 
-        Console.Write("\nMatindi engiziniz: ");
+        // Әдісті шақыру
+        int wordCount = CountWords(text);
+        Console.WriteLine($"Бағдарлама жауабы (сөздер саны): {wordCount}");
+    }
 
-        string text = Console.ReadLine() ?? "";
+    // Split-ті қолданбай, for циклімен символ бойынша санау
+    static int CountWords(string text)
+    {
+        int count = 0;
+        bool inWord = false;
 
-        int result = CountWords(text);
+        for (int i = 0; i < text.Length; i++)
+        {
+            char ch = text[i];
 
-        Console.WriteLine("\nBastapky matin: " + text);
-        Console.WriteLine("Sozder sany: " + result);
+            if (ch != ' ' && !inWord)
+            {
+                inWord = true;
+                count++; // Жаңа сөз басталды
+            }
+            else if (ch == ' ')
+            {
+                inWord = false; // Бос орын кездессе сөз аяқталды
+            }
+        }
+
+        return count;
     }
 }
-
