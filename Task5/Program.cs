@@ -1,13 +1,13 @@
-﻿using System;
+﻿
+using System;
 
 class Program
 {
-    // Matricany ekranga shygaru
     static void PrintMatrix(int[,] matrix)
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < matrix.GetLength(0); i++)
         {
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < matrix.GetLength(1); j++)
             {
                 Console.Write(matrix[i, j] + "\t");
             }
@@ -15,16 +15,15 @@ class Program
         }
     }
 
-    // Ar bagandagy en ulken elementti tabu
     static int[] FindMax(int[,] matrix)
     {
-        int[] B = new int[5];
+        int[] B = new int[matrix.GetLength(1)];
 
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < matrix.GetLength(1); j++)
         {
             int max = matrix[0, j];
 
-            for (int i = 1; i < 5; i++)
+            for (int i = 1; i < matrix.GetLength(0); i++)
             {
                 if (matrix[i, j] > max)
                 {
@@ -41,16 +40,19 @@ class Program
     static void Main()
     {
         int nomer = 6;
+        int n = 5;
 
-        // 5x5 matrica
-        int[,] matrix =
+        int[,] matrix = new int[n, n];
+
+        Random rnd = new Random(nomer);
+
+        for (int i = 0; i < matrix.GetLength(0); i++)
         {
-            { 8,  2,  10,  7,  9 },
-            { 6,  2,  -1,  5,  0 },
-            { 4, -7,   5,  2, -7 },
-            { 6, -2,   5,  7,  3 },
-            { 2, -4, -10, -8, -4 }
-        };
+            for (int j = 0; j < matrix.GetLength(1); j++)
+            {
+                matrix[i, j] = rnd.Next(-10, 11);
+            }
+        }
 
         Console.WriteLine("Kod nomeri: " + nomer);
 
